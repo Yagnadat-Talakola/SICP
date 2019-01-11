@@ -5,7 +5,6 @@ dotted-tail notation
 (define (f x y . z)
   <body>)
   ;(f 1 2 3 4 5 6), then in the body of the function x = 1, y = 2, z = (list 3 4 5 6)
-
 |#
 
 #|

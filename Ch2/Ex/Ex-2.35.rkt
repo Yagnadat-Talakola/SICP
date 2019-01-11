@@ -7,7 +7,7 @@
       (op (car sequence)
           (accumulate op initial (cdr sequence)))))
 
-; map processes the tree and returns the list where each element corresponds to leaves of corresponding tree element. 
+; map processes the tree and returns the list where each element corresponds to number of leaves of each tree element. 
 (define (count-leaves tree)
   (accumulate (lambda (x y) (+ x y))
               0
