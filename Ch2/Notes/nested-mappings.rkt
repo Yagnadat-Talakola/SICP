@@ -56,7 +56,26 @@
                   (map (lambda (j) (list i j))
                        (enumerate-interval 1 (- i 1))))
                 (enumerate-interval 1 n)))))
-        
+
+; permutations of a set {1, 2, 3} can be computed as follows:
+; remove 1 and compute permutations of {2, 3} and join 1 in the beginning. -> {1, 2, 3} {1, 3, 2}
+; remove 2 and compute permutations of {1, 3} and join 2 in the beginning -> {2, 1, 3} {2, 3, 1}
+; remove 3 and compute permutations of {1, 2} and join 3 in the beginning -> {3, 1, 2} {3, 2, 1}
+; combine all the results to get the permutations of {1, 2, 3}
+
+(define (permutations s)
+  (if (null? s)
+      (list '())
+      (flatmap (lambda (x)
+                 (map (lambda (p) (cons x p))
+                      (permutations (remove x s))))
+               s)))
+
+; remove procedure returns all the items in the list except for the given item
+(define (remove x s)
+  (filter (lambda (t) (not (= t x)))
+          s))
+                        
         
        
          
