@@ -16,7 +16,7 @@
       '()
       (cons low (enumerate-interval (+ low 1) high))))
 
-; flat-map procedure
+; flatmap procedure
 (define (flatmap proc seq)
   (accumulate append
               '()

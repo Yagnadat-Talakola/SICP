@@ -75,10 +75,5 @@
 (define (remove x s)
   (filter (lambda (t) (not (= t x)))
           s))
-                        
-        
-       
-         
-
   
                           

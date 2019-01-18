@@ -1,5 +1,6 @@
 #lang racket
 
+
 ; procedures defined earlier.
 (define (accumulate op initial sequence)
   (if (null? sequence)
