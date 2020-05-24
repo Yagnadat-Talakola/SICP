@@ -61,7 +61,7 @@ const altSum = function(a, b) {
     if (a == 0) {
         return b;
     } else {
-        return sum(decrement(a), increment(b));
+        return altSum(decrement(a), increment(b));
     }
 };
 
@@ -204,3 +204,36 @@ const towerOfHanoi = function(n, source, target, spare) {
         towerOfHanoi(n - 1, spare, target, source)
     );
 }
+
+/*
+    @args: nested array 
+    @return: array with the leaves of the array. 
+    fringe([1, 2, [3, 4], [5, 6]]) -> [1, 2, 3, 4, 5, 6]
+*/
+const resultArr = [];
+const fringe = function(arr) {
+    if (typeof(arr) != 'object') resultArr.push(arr);
+    else {
+        for (let i = 0; i < arr.length; i++) {
+            fringe(arr[i]);
+        }
+        return resultArr;
+    }
+};
+
+/*
+    @agrs: two arrays; arr1, arr2
+    @return: array that is a result of appending arr1 with arr2
+    append([1, 2, 3, [4, 5]], [6, 7, [8, 9]]) -> [1, 2, 3, [4, 5], 6, 7, [8, 9]] 
+*/
+const append = function(arr1, arr2) {
+    const resultArr = [];
+    resultArr.push(arr1, arr2);
+    return resultArr;
+};
+
+// fringe(append([1, 2, 3, [4, 5]], [6, 7, [8, 9]])) -> [1, 2, 3, 4, 5, 6, 7, 8, 9]
+// fringe(append([1, 2, 3, [[4], 5]], [6, [7], [8, 9]])) -> [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+
+
