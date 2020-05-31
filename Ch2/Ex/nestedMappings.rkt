@@ -1,0 +1,108 @@
+#lang sicp
+
+; enumerate-interval
+(define (enumerate-interval low high)
+  (if (> low high)
+      nil
+      (cons low 
+            (enumerate-interval 
+             (+ low 1) 
+             high))))
+
+; filter
+(define (filter predicate sequence)
+  (cond ((null? sequence) nil)
+        ((predicate (car sequence))
+         (cons (car sequence)
+               (filter predicate 
+                       (cdr sequence))))
+        (else  (filter predicate 
+                       (cdr sequence)))))
+
+; accumulate
+(define (accumulate op initial sequence)
+  (if (null? sequence)
+      initial
+      (op (car sequence)
+          (accumulate op initial (cdr sequence)))))
+
+; flatmap
+(define (flatmap proc seq)
+  (accumulate append nil (map proc seq)))
+
+; prime-sum?
+(define (prime-sum? pair)
+  (prime? (+ (car pair) (cadr pair))))
+
+; prime
+(define (prime? n)
+  (let ((prime-list 
+  (filter (lambda (x) (= 0 (remainder n x)))
+          (enumerate-interval 2  (- n 1)))))
+    (if (> (length prime-list) 0)
+        #f
+        #t)))
+
+; make-pair-sum
+(define (make-pair-sum pair)
+  (list (car pair) 
+        (cadr pair) 
+        (+ (car pair) (cadr pair))))
+
+; prime-sum-pairs
+(define (prime-sum-pairs n)
+  (map make-pair-sum
+       (filter 
+        prime-sum?
+        (flatmap
+         (lambda (i)
+           (map (lambda (j) 
+                  (list i j))
+                (enumerate-interval 
+                 1 
+                 (- i 1))))
+         (enumerate-interval 1 n)))))
+
+; remove an item from a sequence
+(define (remove-pair item sequence)
+  (filter (lambda (x) (identical? item x))
+          sequence))
+
+; remove item and generate new list
+(define (new-list-after-removal item sequence)
+  (filter (lambda (x) (not (identical? item x)))
+          sequence))
+
+; generate pairs upto n
+(define (generate-pairs n)
+  (flatmap
+         (lambda (i)
+           (map (lambda (j) 
+                  (list i j))
+                (enumerate-interval 
+                 1 
+                 (- i 1))))
+         (enumerate-interval 1 n)))
+
+; check if two pairs are identical
+(define (identical? pair1 pair2)
+  (if (and (= (car pair1) (car pair2))
+           (= (cadr pair1) (cadr pair2)))
+      #t
+      #f))
+
+; unique-pairs
+(define (unique-pairs n)
+  (flatmap
+   (lambda (i)
+     (map (lambda (j) 
+            (list i j))
+          (enumerate-interval 
+           1 
+           (- i 1))))
+   (enumerate-interval 1 n)))
+                 
+
+ 
+  
+  
