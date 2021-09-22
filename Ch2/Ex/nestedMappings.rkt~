@@ -1,12 +1,5 @@
 #lang sicp
 
-; fringe
-(define (fringe l)
-  (cond ((null? l) nil)
-        ((not (pair? l)) (list l))
-        (else (append (fringe (car l))
-                      (fringe (cdr l))))))
-
 ; enumerate-interval
 (define (enumerate-interval low high)
   (if (> low high)
@@ -93,9 +86,8 @@
 
 ; check if two pairs are identical
 (define (identical? pair1 pair2)
-  (if (or (and (= (car pair1) (car pair2))
-               (= (cadr pair1) (cadr pair2)))
-          (null? pair1))
+  (if (and (= (car pair1) (car pair2))
+           (= (cadr pair1) (cadr pair2)))
       #t
       #f))
 
@@ -109,39 +101,8 @@
            1 
            (- i 1))))
    (enumerate-interval 1 n)))
-
-; procedure to find all ordered triplets that equal to sum, s.
-(define (triplets-equal-sum n s)
- (filter (lambda (pair) (= (accumulate + 0 pair) s))
-         (flatmap
-          (lambda (i)
-            (flatmap (lambda (j)
-                       (map (lambda (k) (list i j k))
-                            (enumerate-interval 1 n)))
-                     (enumerate-interval 1 n)))
-          (enumerate-interval 1 n))))
-
-; arranging n queens on n*n chess board.
-(define (queens board-size)
-  (define (queen-cols k)
-    (if (= k 0)
-        (list empty-board)
-        (filter
-         (lambda (positions) 
-           (safe? k positions))
-         (flatmap
-          (lambda (rest-of-queens)
-            (map (lambda (new-row)
-                   (adjoin-position 
-                    new-row 
-                    k 
-                    rest-of-queens))
-                 (enumerate-interval 
-                  1 
-                  board-size)))
-          (queen-cols (- k 1))))))
-  (queen-cols board-size))
-         
+  
+                  
                  
 
  

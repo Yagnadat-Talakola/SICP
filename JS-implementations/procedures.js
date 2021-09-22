@@ -235,5 +235,35 @@ const append = function(arr1, arr2) {
 // fringe(append([1, 2, 3, [4, 5]], [6, 7, [8, 9]])) -> [1, 2, 3, 4, 5, 6, 7, 8, 9]
 // fringe(append([1, 2, 3, [[4], 5]], [6, [7], [8, 9]])) -> [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
+/*
+    @args: array
+    @return: array with subsets of elements in the given array
+    subsets([1, 2, 3]) -> [[], [1], [2], [3], [1, 2], [1, 3], [2, 3], [1, 2, 3]]
+*/
 
+// arr = [1, 2, 3]
+let finalArr = [];
+const subsets = function(arr) {
+    if (arr.length == 0) {
+        finalArr.push([])
+        return finalArr;
+    }
+    if (arr.length == 1) {
+        finalArr.push(arr)
+        return finalArr;
+    }
+    else {
+        let removedElement = arr.shift();
+        let temp = finalArr.map(arr => {
+            arr.push(removedElement)    
+        })
+        finalArr.push(temp)
+    }
+}
+
+/*
+[], [1], [2], [1, 2] -> (1, 2) -> [3], [1, 3] [2, 3] [1, 2, 3]
+[] [1]
+
+/*
 
