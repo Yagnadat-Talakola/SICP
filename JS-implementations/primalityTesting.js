@@ -31,10 +31,11 @@ const gcdAlgo = (a, b) => {
 
 // The straightforward way of finding the smallest divisor of a given number, n. 
 const smallestDivisor = (n) => {
+    // helper functions
     let square = (x) => x * x;
-
     let divides = (x, y) => x % y === 0;
 
+    // main function
     let findDivisor = (testDivisor) => {
         if (square(testDivisor) > n) {
             return n;
@@ -49,4 +50,42 @@ const smallestDivisor = (n) => {
 };
 
 // Prime function 
-const isPrime =  (n) => smallestDivisor(n) === n;
+const isPrimeSlow =  (n) => smallestDivisor(n) === n;
+
+// helper functions
+let remainder = (a, b) => a % b;
+let square = (x) => x * x;
+
+// expmod function: computes exponential of a number (base^exp) modulo another number (m) -> [base^exp % m]
+const expmod = (base, exp, m) => {    
+    if (exp == 0) {
+        return 1;
+    } else if (exp % 2 == 0) {  // even case
+        return remainder(square(expmod(base, exp / 2, m)), m);
+    } else {    // odd case
+        return remainder(base * expmod(base, exp - 1, m), m);
+    }
+};
+
+// Fermat Test
+const fermatTest = (n) => {
+    let tryIt = (a) => {
+        if (expmod(a, n, n) === a) {
+            return true;
+        } else {
+            return false;
+        }
+    };
+    tryIt(Math.floor(Math.random() * n));
+};
+
+// Fast prime
+const isPrimeFast = (n, times) => {
+    if (times === 0) {
+        return true;
+    } else if (fermatTest(n)) {
+        isPrimeFast(n, times - 1);
+    } else {
+        return false;
+    }
+};
