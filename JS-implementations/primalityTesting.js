@@ -76,7 +76,7 @@ const fermatTest = (n) => {
             return false;
         }
     };
-    tryIt(Math.floor(Math.random() * n));
+    return tryIt(Math.floor(Math.random() * n));
 };
 
 // Fast prime
@@ -84,7 +84,7 @@ const isPrimeFast = (n, times) => {
     if (times === 0) {
         return true;
     } else if (fermatTest(n)) {
-        isPrimeFast(n, times - 1);
+       return isPrimeFast(n, times - 1);
     } else {
         return false;
     }
